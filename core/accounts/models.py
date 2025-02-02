@@ -2,6 +2,7 @@ from django.db.models import *
 from django.contrib.auth.models import BaseUserManager , AbstractBaseUser , PermissionsMixin
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.conf import settings
 
 
 class UserManager(BaseUserManager):
@@ -53,10 +54,18 @@ class Profile(Model):
     updated_at = DateField(auto_now=True)
 
     def __str__(self):
-        return self.user.email
+        return self.user.email 
 
 
 @receiver(post_save, sender=User)
 def add_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(user=instance)
+        
+        
+class Message(Model):
+    title = CharField(max_length=255)
+    send_from = ForeignKey(User , blank=False, null=False , on_delete=CASCADE , limit_choices_to={"is_staff" : True})
+    send_to = ForeignKey(settings.APP_MODEL , blank=False , null=False , on_delete=CASCADE)
+    text = TextField(null=False , blank=False)
+    sent_in = DateTimeField(auto_now_add=True)
