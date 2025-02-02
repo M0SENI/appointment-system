@@ -1,10 +1,11 @@
 from django.db import models
-from core.accounts.models import Profile
+from django.contrib.auth import get_user_model
 from django.http import request
 
+User = get_user_model()
 
 class Appointment(models.Model):
-    user = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     phone = models.CharField(max_length=50)
@@ -14,7 +15,7 @@ class Appointment(models.Model):
     accepted_date = models.DateField(auto_now_add=False, null=True, blank=True)
 
     def __str__(self):
-        return self.first_name
+        return self.user.email
 
     class Meta:
         ordering = ["-sent_date"]
