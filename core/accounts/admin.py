@@ -20,6 +20,10 @@ class CustomUserAdmin(UserAdmin):
             "Access",
             {"fields": ("is_staff", "is_active", "is_superuser")}))
 
+class MessageAdmin(admin.ModelAdmin):
+    list_display = ('id','title' , 'sent_to')
+    ordering = ['sent_in']
 
 admin.site.register(Profile)
 admin.site.register(User, CustomUserAdmin)
+admin.site.register(Message)
