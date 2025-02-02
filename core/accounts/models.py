@@ -1,5 +1,7 @@
 from django.db.models import *
 from django.contrib.auth.models import BaseUserManager , AbstractBaseUser , PermissionsMixin
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 
 class UserManager(BaseUserManager):
@@ -38,3 +40,23 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
+
+
+class Profile(Model):
+    user = ForeignKey('User', on_delete=CASCADE, related_name='user_profile')
+    first_name = CharField(max_length=255, blank=False)
+    last_name = CharField(max_length=255, blank=False)
+    phone_number = BigIntegerField(null=True, blank=True)
+    image = ImageField(null=True, blank=True, upload_to="media/profile")
+    description = TextField(null=True, blank=True)
+    created_at = DateField(auto_now_add=True)
+    updated_at = DateField(auto_now=True)
+
+    def __str__(self):
+        return self.user.email
+
+
+@receiver(post_save, sender=User)
+def add_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
