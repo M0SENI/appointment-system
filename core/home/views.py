@@ -6,10 +6,11 @@ from django.core.mail import EmailMessage, message
 from django.conf import settings
 from django.contrib import messages
 from .models import Appointment
-from django.views.generic import ListView
+from django.views.generic import ListView , CreateView , UpdateView
 import datetime
 from django.template import Context
 from django.template.loader import render_to_string, get_template
+from .forms import AppointmentForm
 
 
 class HomeTemplateView(TemplateView):
@@ -60,8 +61,7 @@ class ManageAppointmentTemplateView(ListView):
     template_name = "manage-appointments.html"
     model = Appointment
     context_object_name = "appointments"
-    login_required = True
-    paginate_by = 3
+    paginate_by = 8
 
     def post(self, request):
         date = request.POST.get("date")
@@ -96,3 +96,25 @@ class ManageAppointmentTemplateView(ListView):
             "title": "Manage Appointments"
         })
         return context
+
+
+class AppointmentAddView(CreateView):
+    model = Appointment
+    form_class = AppointmentForm
+    template_name = 'appointment.html'
+    success_url = '/make-an-appointment/'
+
+    def form_valid(self ,  form):
+        form.instance.user = self.request.user
+        form.instance.save()
+        return super().form_valid(form)
+
+
+
+class PostUpdateView(UpdateView):
+    model = Appointment
+    template_name = 'update-appointment.html'
+    fields = ['user', 'first_name' ,'last_name', 'phone' , 'request' ]
+    template_name_suffix = "_update_form"
+    success_url = '/thanks/'
+    
