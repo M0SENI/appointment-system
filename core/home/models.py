@@ -5,7 +5,7 @@ from django.http import request
 User = get_user_model()
 
 class Appointment(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE , related_name='appointment_user')
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     phone = models.CharField(max_length=50)
@@ -19,3 +19,6 @@ class Appointment(models.Model):
 
     class Meta:
         ordering = ["-sent_date"]
+        
+class Accepted(models.Model):
+    pass
