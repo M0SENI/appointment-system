@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block cta %}
+<div align="center" style="background: rgb(177, 177, 177)">
+    {% if messages %}
+    <div class="card notification-card notification-invitation"  >
+        <div class="card-body">
+        {% for message in messages %}
+                <div class="card-title">{{message}} </div>
+            {% endfor %}
+        </div>
+      </div>
+    {% endif %}
+    <div class="form">
+        <div>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

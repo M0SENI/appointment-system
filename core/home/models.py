@@ -1,24 +1,30 @@
-from django.db import models
+from django.db.models import *
 from django.contrib.auth import get_user_model
 from django.http import request
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 User = get_user_model()
 
-class Appointment(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE , related_name='appointment_user')
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
-    phone = models.CharField(max_length=50)
-    request = models.TextField(blank=True)
-    sent_date = models.DateField(auto_now_add=True)
-    accepted = models.BooleanField(default=False)
-    accepted_date = models.DateField(auto_now_add=False, null=True, blank=True)
+class Appointments(Model):
+    STATUS_CHOICES = [
+        ('pending', 'Pending'),
+        ('accepted', 'Confirmed'),
+        ('rejected', 'Cancelled'),
+    ]
+    user = ForeignKey(User, on_delete=CASCADE , related_name='appointments_user')
+    first_name = CharField(max_length=50)
+    last_name = CharField(max_length=50)
+    phone = CharField(max_length=50)
+    request = TextField(blank=True)
+    status = CharField(max_length=50,blank=True , choices=STATUS_CHOICES, default='pending')
+    note = TextField(blank=True)
+    sent_date = DateField(auto_now_add=True)
+    checked_date = DateField(auto_now=True)
 
-    def __str__(self):
-        return self.user.email
 
     class Meta:
         ordering = ["-sent_date"]
-        
-class Accepted(models.Model):
-    pass
+        verbose_name_plural = "Appointments"
+        verbose_name = "Appointment"
+

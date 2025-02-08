@@ -26,4 +26,3 @@ class MessageAdmin(admin.ModelAdmin):
 
 admin.site.register(Profile)
 admin.site.register(User, CustomUserAdmin)
-admin.site.register(Message)

@@ -5,12 +5,14 @@ from django.views.generic.base import TemplateView
 from django.core.mail import EmailMessage, message
 from django.conf import settings
 from django.contrib import messages
-from .models import Appointment
+from .models import Appointments
 from django.views.generic import ListView , CreateView , UpdateView
 import datetime
 from django.template import Context
 from django.template.loader import render_to_string, get_template
-from .forms import AppointmentForm
+from .forms import *
+from django.contrib.auth.mixins import LoginRequiredMixin , PermissionRequiredMixin
+from django.contrib.messages import *
 
 
 class HomeTemplateView(TemplateView):
@@ -42,7 +44,7 @@ class AppointmentTemplateView(TemplateView):
         mobile = request.POST.get("mobile")
         message = request.POST.get("request")
 
-        appointment = Appointment.objects.create(
+        appointment = Appointments.objects.create(
             first_name=fname,
             last_name=lname,
             email=email,
@@ -59,47 +61,14 @@ class AppointmentTemplateView(TemplateView):
 
 class ManageAppointmentTemplateView(ListView):
     template_name = "manage-appointments.html"
-    model = Appointment
+    model = Appointments
+    queryset = Appointments.objects.filter(status='pending')
     context_object_name = "appointments"
     paginate_by = 8
+    # is staff needed
 
-    def post(self, request):
-        date = request.POST.get("date")
-        appointment_id = request.POST.get("appointment-id")
-        appointment = Appointment.objects.get(id=appointment_id)
-        appointment.accepted = True
-        appointment.accepted_date = datetime.datetime.now()
-        appointment.save()
-
-        data = {
-            "fname": appointment.first_name,
-            "date": date,
-        }
-
-        message = get_template('email.html').render(data)
-        email = EmailMessage(
-            "About your appointment",
-            message,
-            settings.EMAIL_HOST_USER,
-            [appointment.email],
-        )
-        email.content_subtype = "html"
-        email.send()
-
-        messages.add_message(request, messages.SUCCESS, f"You accepted the appointment of {appointment.first_name}")
-        return HttpResponseRedirect(request.path)
-
-    def get_context_data(self, *args, **kwargs):
-        context = super().get_context_data(*args, **kwargs)
-        appointments = Appointment.objects.all()
-        context.update({
-            "title": "Manage Appointments"
-        })
-        return context
-
-
-class AppointmentAddView(CreateView):
-    model = Appointment
+class AppointmentAddView(LoginRequiredMixin,CreateView):
+    model = Appointments
     form_class = AppointmentForm
     template_name = 'appointment.html'
     success_url = '/make-an-appointment/'
@@ -111,10 +80,13 @@ class AppointmentAddView(CreateView):
 
 
 
-class PostUpdateView(UpdateView):
-    model = Appointment
+class AppointmentUpdateView(UpdateView):
+    model = Appointments
+    form_class = UpdateAppointmentForm
     template_name = 'update-appointment.html'
-    fields = ['user', 'first_name' ,'last_name', 'phone' , 'request' ]
     template_name_suffix = "_update_form"
-    success_url = '/thanks/'
-    
+    success_url = "/manage-appointments/"
+    def form_valid(self , form):
+        response = super().form_valid(form)
+        success(self.request , "Appointment updated successfully!")
+        return response

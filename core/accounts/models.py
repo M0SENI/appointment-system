@@ -62,10 +62,3 @@ def add_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(user=instance)
         
-        
-class Message(Model):
-    title = CharField(max_length=255)
-    send_from = ForeignKey(User , blank=False, null=False , on_delete=CASCADE , limit_choices_to={"is_staff" : True})
-    send_to = ForeignKey(settings.APP_MODEL , blank=False , null=False , on_delete=CASCADE)
-    text = TextField(null=False , blank=False)
-    sent_in = DateTimeField(auto_now_add=True)

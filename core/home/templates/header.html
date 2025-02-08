@@ -1,0 +1,241 @@
+{% load static %}
+<header class="site-header header style-1">
+		<div class="header-info-bar d-none d-xxl-block">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col">
+						<div class="icon-bx-wraper style-5">
+							<div class="icon-bx">
+								<span class="icon-cell">
+									<img src="{% static 'images/icon1.svg' %}" alt="">
+								</span>
+							</div>
+							<div class="icon-content">
+								<h2 class="dz-title text-primary">تماس با ما</h2>
+								<p><a href="tel:+11234567890" class="text-secondary">+1 123 456 7890</a></p>
+							</div>
+						</div>
+					</div>
+					<div class="col">
+						<div class="icon-bx-wraper style-5">
+							<div class="icon-bx">
+								<span class="icon-cell">
+									<img src="{% static 'images/icon2.svg' %}" alt="">
+								</span>
+							</div>
+							<div class="icon-content">
+								<h2 class="dz-title text-primary">پشتیبانی ایمیل</h2>
+								<p><a href="mailto:email@domain.com" class="text-secondary">email@domain.com</a></p>
+							</div>
+						</div>
+					</div>
+					<div class="col">
+						<div class="icon-bx-wraper style-5">
+							<div class="icon-bx">
+								<span class="icon-cell">
+									<img src="{% static 'images/icon3.svg' %}" alt="">
+								</span>
+							</div>
+							<div class="icon-content">
+								<h2 class="dz-title text-primary">نوبت آنلاین </h2>
+								<p>رزرو<i class="feather icon-arrow-left"></i></p>
+							</div>
+						</div>
+					</div>
+					<div class="col">
+						<div class="icon-bx-wraper style-5">
+							<div class="icon-bx">
+								<span class="icon-cell">
+									<img src="{% static 'images/icon4.svg' %}" alt="">
+								</span>
+							</div>
+							<div class="icon-content">
+								<h2 class="dz-title text-primary">پشتیبانی</h2>
+								<p>24x7 پشتیبانی</p>
+							</div>
+						</div>
+					</div>
+					<div class="col">
+						<div class="icon-bx-wraper style-5">
+							<div class="icon-bx">
+								<span class="icon-cell">
+									<img src="{% static 'images/icon5.svg' %}" alt="">
+								</span>
+							</div>
+							<div class="icon-content">
+								<h2 class="dz-title text-primary">پرداخت</h2>
+								<p>پرداخت آنلاین <i class="feather icon-arrow-left"></i></p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Main Header -->
+		<div class="sticky-header main-bar-wraper">
+			<div class="main-bar clearfix bg-secondary text-white">
+				<div class="container-fluid clearfix inner-bar">
+
+					<!-- Website Logo -->
+					<div class="logo-header logo-dark">
+						<a href="index.html"><img src="{% static 'images/logo-white.svg' %}" alt="logo"></a>
+					</div>
+
+					<!-- Nav Toggle Button -->
+					<button class="w3menu-toggler navicon" type="button" data-target="#W3Menu">
+						<span></span>
+						<span></span>
+						<span></span>
+					</button>
+
+					<!-- Main Nav -->
+					<div class="menu-close fade-overlay"></div>
+					<div class="header-nav w3menu w3menu-end mo-left" id="W3Menu">
+						<div class="logo-header logo-dark">
+							<a href="index.html"><img src="{% static 'images/logo.svg' %}" alt=""></a>
+						</div>
+						<ul class="nav navbar-nav">
+							<li class="has-mega-menu sub-menu-down auto-width menu-left"></li>
+							<li class="sub-menu-down">
+								<a href="javascript:void(0);"><span>صفحات</span> <i class="fas fa-chevron-down tabindex"></i></a>
+								<ul class="sub-menu">
+									<li><a href="about-us.html">درباره ما</a></li>
+									<li><a href="appointment.html">نوبت دهی</a></li>
+									<li><a href="faqs.html">سوالات متداول</a></li>
+									<li><a href="error-404.html">خطا 404</a></li>
+									<li><a href="under-construction.html"> در دست ساخت </a></li>
+								</ul>
+							</li>
+							<li><a href="contact-us.html"><span>ارتباط با ما</span></a></li>
+						</ul>
+
+						<div class="dz-social-icon">
+							<ul>
+								<li>
+									<a href="https://www.facebook.com" target="_blank">
+										<i class="fa-brands fa-facebook-f"></i>
+									</a>
+								</li>
+								<li>
+									<a href="https://twitter.com" target="_blank">
+										<i class="fa-brands fa-x-twitter"></i>
+									</a>
+								</li>
+								<li>
+									<a href="https://www.linkedin.com" target="_blank">
+										<i class="fa-brands fa-linkedin"></i>
+									</a>
+								</li>
+								<li>
+									<a href="https://www.instagram.com" target="_blank">
+										<i class="fa-brands fa-instagram"></i>
+									</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+
+					<!-- EXTRA NAV -->
+					<div class="extra-nav">
+						<div class="extra-cell">
+							<ul class="header-right">
+								<li class="nav-item">
+									<a href="appointment.html" class="btn btn-primary btn-hover1">
+										نوبت‌دهی
+									</a>
+								</li>
+								<li class="nav-item">
+									<button type="button" class="toggle-nav-btn" data-bs-toggle="offcanvas" data-bs-target="#headerSidebar" aria-controls="offcanvasLeft">
+										<span></span>
+										<span></span>
+										<span></span>
+									</button>
+								</li>
+							</ul>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<!-- Main Header End -->
+
+		<!-- Sidebar -->
+		<div class="offcanvas dz-offcanvas offcanvas offcanvas-end" tabindex="-1" id="headerSidebar">
+			<button type="button" class="btn-close m-t10 m-l10" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+			<div class="offcanvas-body">
+				<div class="widget">
+					<div class="sidebar-header m-b20">
+						<a href="index.html"><img src="{% static 'images/logo.svg' %}" alt="/"></a>
+					</div>
+					<p>کلینیک مستر یک الگوی بوت سترپ اچ تی ام ال مدرن و پاسخگو است که برای وب سایت های بهداشتی و پزشکی طراحی شده است.ایده آل برای کلینیک ها ، بیمارستان ها و متخصصان مراقبت های بهداشتی که به دنبال حضور حرفه ای آنلاین با طراحی زیبا و کاربر پسند هستند.</p>
+				</div>
+
+				<div class="widget">
+					<div class="widget-title">
+						<h4 class="title">ارتباط با ما</h4>
+					</div>
+					<ul class="list-check">
+						<li>خیابان 785 15 ، دفتر 478 برلین ، د 81566</li>
+						<li><a href="mailto:email@domain.com" class="text-body">email@domain.com</a></li>
+						<li><a href="tel:+11234567890" class="text-body">+1 123 456 7890</a></li>
+					</ul>
+				</div>
+
+				<div class="widget">
+					<div class="widget-title">
+						<h4 class="title">خبرنامه</h4>
+					</div>
+					<form class="dzSubscribe style-2" action="script/mailchimp.php" method="post">
+						<div class="dzSubscribeMsg"></div>
+						<div class="form-group">
+							<div class="input-group mb-0">
+								<input name="dzEmail" required="required" type="email" class="form-control" placeholder="آدرس ایمیل">
+								<div class="input-group-addon">
+									<button name="submit" value="Submit" type="submit" class="btn text-primary btn-transparent p-2">
+										<i class="fa-solid fa-paper-plane"></i>
+									</button>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+
+				<div class="widget">
+					<div class="widget-title">
+						<h4 class="title">دنبال کردن ما</h4>
+					</div>
+					<div class="dz-social-icon style-1">
+						<ul>
+							<li>
+								<a href="https://www.linkedin.com" target="_blank">
+									<i class="fa-brands fa-linkedin"></i>
+								</a>
+							</li>
+							<li>
+								<a href="https://www.instagram.com" target="_blank">
+									<i class="fa-brands fa-instagram"></i>
+								</a>
+							</li>
+							<li>
+								<a href="https://www.facebook.com" target="_blank">
+									<i class="fa-brands fa-facebook-f"></i>
+								</a>
+							</li>
+							<li>
+								<a href="https://twitter.com" target="_blank">
+									<i class="fa-brands fa-x-twitter"></i>
+								</a>
+							</li>
+							<li>
+								<a href="https://www.youtube.com" target="_blank">
+									<i class="fa-brands fa-youtube"></i>
+								</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</header>
