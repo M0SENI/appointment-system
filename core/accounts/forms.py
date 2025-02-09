@@ -1,25 +1,23 @@
 from django.contrib.auth import get_user_model
 from django import forms
-from django.contrib.auth import get_user_model
-
-User = get_user_model()
 
 
-class RegistrationForm(forms.ModelForm):
-    password1 = forms.CharField(widget=forms.PasswordInput)
-    password2 = forms.CharField(widget=forms.PasswordInput)
+class VerifyForm(forms.Form):
+    email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'form-control' , 'name' : 'dzEmail' , 'placeholder' :  'ایمیل' , 'required' : True , 'type' : 'email'}))
 
-    class Meta:
-        model = User
-        fields = ['email', 'password1', 'password2']
+class VerifyCodeForm(forms.Form):
+    code = forms.CharField(max_length=6, widget=forms.Textarea(attrs={'class' : 'form-control' , 'required' : True , 'placeholder' : "کد شش رقمی"}))
+
+class SetPasswordForm(forms.Form):
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'class' : 'form-control border-rounded'}), label='پسورد')
+    password_confirm = forms.CharField(widget=forms.PasswordInput(attrs={'class' : 'form-control border-rounded'}), label='تایید پسورد')
 
     def clean(self):
         cleaned_data = super().clean()
-        password1 = cleaned_data.get('password1')
-        password2 = cleaned_data.get('password2')
-
-        if password1 and password2 and password1 != password2:
-            raise forms.ValidationError("Passwords don't match")
-
+        password = cleaned_data.get('password')
+        password_confirm = cleaned_data.get('password_confirm')
+        if password != password_confirm:
+            raise forms.ValidationError('پسورد ها با هم برابر نیست!')
         return cleaned_data
+
 
