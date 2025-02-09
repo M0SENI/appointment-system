@@ -8,9 +8,9 @@ User = get_user_model()
 
 class Appointments(Model):
     STATUS_CHOICES = [
-        ('pending', 'Pending'),
-        ('accepted', 'Confirmed'),
-        ('rejected', 'Cancelled'),
+        ('pending', 'در انتظار پاسخ'),
+        ('accepted', 'تایید شده'),
+        ('rejected', 'لغو  شده'),
     ]
     user = ForeignKey(User, on_delete=CASCADE , related_name='appointments_user')
     first_name = CharField(max_length=50)
