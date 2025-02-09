@@ -1,12 +1,10 @@
-from django.http.response import HttpResponseRedirect
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.views.generic.base import TemplateView
 from django.core.mail import EmailMessage, message
 from django.conf import settings
-from django.contrib import messages
 from .models import Appointments
-from django.views.generic import ListView , CreateView , UpdateView
+from django.views.generic import ListView, CreateView, UpdateView, FormView
 import datetime
 from django.template import Context
 from django.template.loader import render_to_string, get_template
@@ -15,48 +13,21 @@ from django.contrib.auth.mixins import LoginRequiredMixin , PermissionRequiredMi
 from django.contrib.messages import *
 
 
-class HomeTemplateView(TemplateView):
-    template_name = "index.html"
+class HomeTemplateView(CreateView , LoginRequiredMixin):
+    model = Appointments
+    form_class = AppointmentForm
+    template_name = 'index.html'
+    success_url = '/make-an-appointment/'
 
-    def post(self, request):
-        name = request.POST.get("name")
-        email = request.POST.get("email")
-        message = request.POST.get("message")
+    def form_valid(self ,  form):
+        if not form.is_valid():
+            error(self.request ,"فرم شما ثبت نشد , لطفا مجددا امتحان کنید.")
+            return self.form_invalid(form)
+        form.instance.user = self.request.user
+        form.instance.save()
+        success(self.request , "فرم شما ثبت و ارسال شد!")
+        return super().form_valid(form)
 
-        email = EmailMessage(
-            subject=f"{name} from doctor family.",
-            body=message,
-            from_email=settings.EMAIL_HOST_USER,
-            to=[settings.EMAIL_HOST_USER],
-            reply_to=[email]
-        )
-        email.send()
-        return HttpResponse("Email sent successfully!")
-
-
-class AppointmentTemplateView(TemplateView):
-    template_name = "appointment.html"
-
-    def post(self, request):
-        fname = request.POST.get("fname")
-        lname = request.POST.get("fname")
-        email = request.POST.get("email")
-        mobile = request.POST.get("mobile")
-        message = request.POST.get("request")
-
-        appointment = Appointments.objects.create(
-            first_name=fname,
-            last_name=lname,
-            email=email,
-            phone=mobile,
-            request=message,
-        )
-
-        appointment.save()
-
-        messages.add_message(request, messages.SUCCESS,
-                             f"Thanks {fname} for making an appointment, we will email you ASAP!")
-        return HttpResponseRedirect(request.path)
 
 
 class ManageAppointmentTemplateView(ListView):
@@ -65,17 +36,21 @@ class ManageAppointmentTemplateView(ListView):
     queryset = Appointments.objects.filter(status='pending')
     context_object_name = "appointments"
     paginate_by = 8
-    # is staff needed
+    # is staff permission needed
 
-class AppointmentAddView(LoginRequiredMixin,CreateView):
+class AppointmentAddView(LoginRequiredMixin,FormView):
     model = Appointments
     form_class = AppointmentForm
     template_name = 'appointment.html'
     success_url = '/make-an-appointment/'
 
     def form_valid(self ,  form):
+        if not form.is_valid():
+            error(self.request ,"فرم شما ثبت نشد , لطفا مجددا امتحان کنید.")
+            return self.form_invalid(form)
         form.instance.user = self.request.user
         form.instance.save()
+        success(self.request , "فرم شما ثبت و ارسال شد!")
         return super().form_valid(form)
 
 
@@ -90,3 +65,14 @@ class AppointmentUpdateView(UpdateView):
         response = super().form_valid(form)
         success(self.request , "Appointment updated successfully!")
         return response
+
+
+
+class ContactUsView(CreateView):
+    template_name = 'contact-us.html'
+
+class AboutView(TemplateView):
+    template_name = 'about-us.html'
+
+class FaqView(TemplateView):
+    template_name = 'faqs.html'
