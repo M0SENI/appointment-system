@@ -8,11 +8,12 @@ class AppointmentForm(forms.ModelForm):
         model = Appointments
         fields = ['first_name', 'last_name', 'phone', 'request', 'email']
         widgets = {
-            'first_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter First Name'}),
-            'last_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter Last Name'}),
-            'phone': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter Phone Number'}),
-            'request': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Enter Your Request'}),
+            'first_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'نام (به فارسی)' , 'id' : 'inputYourName' ,'require' : True}),
+            'last_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'نام خانوادگی(به فارسی)' , 'id' : 'inputYourLastName' , 'require' : True}),
+            'phone': forms.TextInput(attrs={'class': 'form-control dz-number', 'placeholder': 'شماره تماس' , 'id' : 'inputYourPhone' , 'name':'dzPhoneNumber' , 'require' : True}),
+            'request': forms.Textarea(attrs={'class': 'form-control', 'placeholder':  'یادداشت' , 'id': 'inputYourRequest' , 'require' : True}),
         }
+
 
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user', None)
@@ -21,7 +22,7 @@ class AppointmentForm(forms.ModelForm):
             self.fields['email'].initial = user.email
 
 
-
+# not usable yet
 class UpdateAppointmentForm(forms.ModelForm):
     class Meta:
         model = Appointments
