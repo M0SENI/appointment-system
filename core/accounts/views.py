@@ -7,35 +7,13 @@ from django.views.generic import FormView, CreateView
 from .forms import *
 from .models import User
 from django.contrib.messages import *
-from django.core.mail import send_mail
 from django.conf import settings
 import random
 import string
+from django.contrib.auth import logout
 
 
-def generate_code():
-    return ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
 
-class VerifyView(FormView):
-    template_name = 'verify.html'
-    form_class = VerifyForm
-    success_url = reverse_lazy('verify-code')
-
-    def form_valid(self, form):
-        email = form.cleaned_data['email']
-        user = User.objects.filter(email=email).first()
-        if user:
-            code = generate_code()
-            self.request.session['email'] = email
-            self.request.session['code'] = code
-            send_mail('Login Code', f'Your Login code is: {code}', from_email=settings.EMAIL_HOST_USER, recipient_list=[email])
-            return redirect('verify-code')
-        else:
-            code = generate_code()
-            self.request.session['email'] = email
-            self.request.session['code'] = code
-            send_mail('SignUp Code', f'Your sign up code is: {code}', from_email=settings.EMAIL_HOST_USER , recipient_list=[email])
-            return redirect('verify-code')
 
 class VerifyCodeView(FormView):
     template_name = 'verify_code.html'
@@ -49,6 +27,7 @@ class VerifyCodeView(FormView):
             email = self.request.session.get('email')
             user = User.objects.filter(email=email).first()
             if user:
+                self.request.session.set_expiry(1209600)
                 login(self.request, user)
                 return redirect('home')
             else:
@@ -70,7 +49,12 @@ class SetPasswordView(FormView):
         user.set_password(password)
         user.save()
         login(self.request, user)
+        self.request.session.set_expiry(1209600)
         success(self.request, message="با موفقیت وارد حساب شدید!")
         return super().form_valid(form)
 
+
+def logout_view(request):
+    logout(request)
+    return redirect('home')
 
