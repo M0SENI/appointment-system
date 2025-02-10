@@ -79,7 +79,7 @@
 
 					<!-- Website Logo -->
 					<div class="logo-header logo-dark">
-						<a href="index.html"><img src="{% static 'images/logo-white.svg' %}" alt="logo"></a>
+						<a href="{% url 'home' %}"><img src="{% static 'images/logo-white.svg' %}" alt="logo"></a>
 					</div>
 
 					<!-- Nav Toggle Button -->
@@ -93,21 +93,23 @@
 					<div class="menu-close fade-overlay"></div>
 					<div class="header-nav w3menu w3menu-end mo-left" id="W3Menu">
 						<div class="logo-header logo-dark">
-							<a href="index.html"><img src="{% static 'images/logo.svg' %}" alt=""></a>
+							<a href="{% url 'home' %}"><img src="{% static 'images/logo.svg' %}" alt=""></a>
 						</div>
 						<ul class="nav navbar-nav">
 							<li class="has-mega-menu sub-menu-down auto-width menu-left"></li>
 							<li class="sub-menu-down">
 								<a href="javascript:void(0);"><span>صفحات</span> <i class="fas fa-chevron-down tabindex"></i></a>
 								<ul class="sub-menu">
-									<li><a href="about-us.html">درباره ما</a></li>
-									<li><a href="appointment.html">نوبت دهی</a></li>
-									<li><a href="faqs.html">سوالات متداول</a></li>
-									<li><a href="error-404.html">خطا 404</a></li>
-									<li><a href="under-construction.html"> در دست ساخت </a></li>
+									<li><a href="{% url 'about-us' %}">درباره ما</a></li>
+									{% if request.user.is_authenticated %}
+									<li><a href="{% url 'add-appointment' %}">نوبت دهی</a></li>
+									{% else %}
+									<li><a href="#AppForm">نوبت دهی</a></li>
+									{% endif %}
+									<li><a href="{% url 'faq' %}">سوالات متداول</a></li>
 								</ul>
 							</li>
-							<li><a href="contact-us.html"><span>ارتباط با ما</span></a></li>
+							<li><a href="{% url 'contact-us' %}"><span>ارتباط با ما</span></a></li>
 						</ul>
 
 						<div class="dz-social-icon">
@@ -141,9 +143,15 @@
 						<div class="extra-cell">
 							<ul class="header-right">
 								<li class="nav-item">
-									<a href="appointment.html" class="btn btn-primary btn-hover1">
+									{% if request.user.is_authenticated %}
+									<a href="{% url 'add-appointment' %}" class="btn btn-primary btn-hover1">
 										نوبت‌دهی
 									</a>
+									{% else %}
+									<a href="#AppForm" class="btn btn-primary btn-hover1">
+										نوبت‌دهی
+									</a>
+									{% endif %}
 								</li>
 								<li class="nav-item">
 									<button type="button" class="toggle-nav-btn" data-bs-toggle="offcanvas" data-bs-target="#headerSidebar" aria-controls="offcanvasLeft">
@@ -167,7 +175,7 @@
 			<div class="offcanvas-body">
 				<div class="widget">
 					<div class="sidebar-header m-b20">
-						<a href="index.html"><img src="{% static 'images/logo.svg' %}" alt="/"></a>
+						<a href="{% url 'home' %}"><img src="{% static 'images/logo.svg' %}" alt="/"></a>
 					</div>
 					<p>کلینیک مستر یک الگوی بوت سترپ اچ تی ام ال مدرن و پاسخگو است که برای وب سایت های بهداشتی و پزشکی طراحی شده است.ایده آل برای کلینیک ها ، بیمارستان ها و متخصصان مراقبت های بهداشتی که به دنبال حضور حرفه ای آنلاین با طراحی زیبا و کاربر پسند هستند.</p>
 				</div>
@@ -185,23 +193,17 @@
 
 				<div class="widget">
 					<div class="widget-title">
-						<h4 class="title">خبرنامه</h4>
+						<h4 class="title">اطلاعات حساب</h4>
+						{% if request.user.is_authenticated %}
+						<h5> {{ requests.user.email }} </h5>
+						<h5> {{ requests.user.first_name }} {{ request.user.last_name }} </h5>
+						<h5> {{ requests.user.phone }}</h5>
+						<h5><a href="{% url 'logout' %}">-خروج از حساب</a></h5>
+						{% else %}
+						<h5><a href="{% url 'verify' %}">-تایید یا ساخت حساب</a></h5>
+						{% endif %}
 					</div>
-					<form class="dzSubscribe style-2" action="script/mailchimp.php" method="post">
-						<div class="dzSubscribeMsg"></div>
-						<div class="form-group">
-							<div class="input-group mb-0">
-								<input name="dzEmail" required="required" type="email" class="form-control" placeholder="آدرس ایمیل">
-								<div class="input-group-addon">
-									<button name="submit" value="Submit" type="submit" class="btn text-primary btn-transparent p-2">
-										<i class="fa-solid fa-paper-plane"></i>
-									</button>
-								</div>
-							</div>
-						</div>
-					</form>
 				</div>
-
 				<div class="widget">
 					<div class="widget-title">
 						<h4 class="title">دنبال کردن ما</h4>

@@ -1,5 +1,5 @@
 {% load static %}
-	<footer class="site-footer style-1 overlay-primary-light" style="background-image: url(../../static/images/bg4.webp)">
+	<footer class="site-footer style-1 overlay-primary-light">
 		<div class="footer-head">
 			<div class="container">
 				<div class="fh-inner">
@@ -59,7 +59,7 @@
 					<div class="col-xl-3 col-sm-12 wow fadeInUp" data-wow-delay="0.2s" data-wow-duration="0.8s">
 						<div class="widget widget_about me-2">
 							<div class="footer-logo logo-white">
-								<a href="index.html"><img src="{% static 'images/logo.svg' %}" alt=""></a>
+								<a href="{% url 'home' %}"><img src="{% static 'images/logo.svg' %}" alt=""></a>
 							</div>
 							<p><span class="text-primary">کلینیک مستر</span>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد</p>
 						</div>
@@ -70,8 +70,8 @@
 							<ul class="list-hover1">
 								<li><a href="javascript:void(0);"><span> سیاست حفظ حریم خصوصی </span></a></li>
 								<li><a href="javascript:void(0);"><span> شرایط و ضوابط </span></a></li>
-								<li><a href="contact-us.html"><span>ارتباط با ما</span></a></li>
-								<li><a href="contact-us.html"><span> نقشه سایت ما </span></a></li>
+								<li><a href="{% url 'contact-us' %}"><span>ارتباط با ما</span></a></li>
+								<li><a href="{% url 'contact-us' %}"><span> نقشه سایت ما </span></a></li>
 							</ul>
 						</div>
 					</div>
@@ -91,8 +91,8 @@
 						<div class="widget widget_services">
 							<h2 class="footer-title"> پیوندهای سریع </h2>
 							<ul class="list-hover1">
-								<li><a href="about-us.html"><span>درباره ما</span></a></li>
-								<li><a href="appointment.html"><span> قرار ملاقات </span></a></li>
+								<li><a href="{% url 'about-us' %}"><span>درباره ما</span></a></li>
+								<li><a href="{% url 'add-appointment' %}"><span> قرار ملاقات </span></a></li>
 							</ul>
 						</div>
 					</div>

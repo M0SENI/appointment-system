@@ -1,15 +1,15 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-{% include 'header' %}
+{% include 'header.html' %}
 <main class="page-content">
-			<div class="dz-bnr-inr dz-banner-dark overlay-secondary-middle dz-bnr-inr-md" style="background-image:url(../../static/images/bnr2.webp);">
-		<div class="container">
+			<div class="dz-bnr-inr dz-banner-dark overlay-secondary-middle dz-bnr-inr-md" style="background-image:url(../static/images/bnr2.webp);">
+		<div class="container h-50">
 			<div class="dz-bnr-inr-entry d-table-cell">
 				<h1 class="wow fadeInUp" data-wow-delay="0.2s" data-wow-duration="0.8s">سوالات متداول</h1>
 				<nav aria-label="breadcrumb" class="breadcrumb-row wow fadeInUp" data-wow-delay="0.4s" data-wow-duration="0.8s">
 					<ul class="breadcrumb">
-						<li class="breadcrumb-item"><a href="index.html">خانه</a></li>
+						<li class="breadcrumb-item"><a href="{% url 'home' %}">خانه</a></li>
 						<li class="breadcrumb-item">سوالات متداول</li>
 					</ul>
 				</nav>
@@ -48,7 +48,7 @@
 		</ul>
 	</div>
 
-			<section class="content-inner" style="background-image: url(../../static/images/bg3.png);     background-position: left bottom; background-repeat: no-repeat;">
+			<section class="content-inner" style="background-image: url(../static/images/bg3.png);     background-position: left bottom; background-repeat: no-repeat;">
 		<div class="container">
 			<div class="row content-wrapper style-5">
 				<div class="col-xxl-7 col-xl-6 col-lg-5 m-b30 align-self-center">
@@ -124,7 +124,7 @@
 									<a href="tel:+11234567890" class="text-secondary">+1 123 456 7890</a>
 								</div>
 							</div>
-							<a href="appointment.html" class="btn btn-lg btn-icon btn-primary btn-shadow">
+							<a href="% url 'add-appointment' %}" class="btn btn-lg btn-icon btn-primary btn-shadow">
 								<span class="w-100">نوبت دهی</span> <span class="right-icon"><i class="feather icon-arrow-left"></i></span>
 							</a>
 						</div>
@@ -135,5 +135,6 @@
 	</section>
 	</main>
 
-{% include footer.html %}
+
+{% include 'footer.html' %}
 {% endblock %}

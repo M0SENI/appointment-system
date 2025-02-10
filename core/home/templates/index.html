@@ -3,8 +3,7 @@
 {% load static %}
 {% include 'header.html' %}
 	<main class="page-content">
-
-			<div class="hero-banner style-1" style="background-image: url(../../static/images/bg4.webp); background-size: cover;">
+			<div class="hero-banner style-1" style="background-image: url(../../static/images/bg2.png); background-size: cover;">
 		<div class="container">
 			<div class="inner-wrapper">
 				<span class="text-vertical text-secondary">24/7 سرویس اضطراری</span>
@@ -13,11 +12,18 @@
 						<div class="hero-content">
 							<h1 class="title wow fadeInUp" data-wow-delay="0.2s" data-wow-duration="0.8s">مراقبت های پزشکی و بهداشتی <span class="text-primary">خدمات</span> <img src="{% static 'images/line.png' %}" alt=""></h1>
 							<p class="text wow fadeInUp" data-wow-delay="0.4s" data-wow-duration="0.8s">سلامتی شما اولویت اصلی ما است.امروز با ما قرار ملاقات بگذارید</p>
-							<a href="appointment.html" class="btn btn-lg btn-icon btn-primary m-r20 wow fadeInUp" data-wow-delay="0.6s" data-wow-duration="0.8s">
+							{% if request.user.authenticated %}
+							<a href="{% url 'add-appointment' %}" class="btn btn-lg btn-icon btn-primary m-r20 wow fadeInUp" data-wow-delay="0.6s" data-wow-duration="0.8s">
 									نوبت دهی
 									<span class="right-icon"><i class="feather icon-arrow-left"></i></span>
 							</a>
-							<a href="contact-us.html" class="btn btn-lg btn-icon btn-secondary wow fadeInUp" data-wow-delay="0.6s" data-wow-duration="0.8s">
+							{% else %}
+							<a href="#AppForm" class="btn btn-lg btn-icon btn-primary m-r20 wow fadeInUp" data-wow-delay="0.6s" data-wow-duration="0.8s">
+									نوبت دهی
+									<span class="right-icon"><i class="feather icon-arrow-left"></i></span>
+							</a>
+							{% endif %}
+							<a href="{% url 'contact-us' %}" class="btn btn-lg btn-icon btn-secondary wow fadeInUp" data-wow-delay="0.6s" data-wow-duration="0.8s">
 								تماس با ما
 								<span class="right-icon"><i class="feather icon-arrow-left"></i></span>
 							</a>
@@ -49,26 +55,7 @@
 									</div>
 								</div>
 							</div>
-							<div class="item4" data-bottom-top="transform: translateY(-50px)" data-top-bottom="transform: translateY(50px)">
-								<div class="info-widget style-3 move-1">
-									<div class="widget-head">
-										<div class="widget-media">
-											<img src="{% static 'images/avatar5.webp' %}" alt="">
-										</div>
-										<div class="widget-content">
-											<h6 class="title"> دکتر ناتالی جکسون </h6>
-											<ul class="star-list">
-												<li><i class="fa fa-star"></i></li>
-												<li><i class="fa fa-star"></i></li>
-												<li><i class="fa fa-star"></i></li>
-												<li><i class="fa fa-star"></i></li>
-												<li><i class="fa fa-star"></i></li>
-											</ul>
-										</div>
-									</div>
-									<p>"این یک واقعیت طولانی است که یک خواننده از محتوای قابل خواندن پریشان می شود"</p>
-								</div>
-							</div>
+
 						</div>
 					</div>
 				</div>
@@ -119,12 +106,13 @@
 				</div>
 			</div>
 		</section>
-			<section class="content-inner-2 bg-light z-2" style="background-image: url(../../static/images/bg5.png);">
+			<section class="content-inner-2 bg-light z-2" id="AppForm" style="background-image: url(../../static/images/bg5.png);">
 		<div class="container">
 			<div class="row align-items-end content-wrapper style-8">
 				<div class="col-lg-6 text-center wow fadeInUp" data-wow-delay="0.2s" data-wow-duration="0.8s">
 					<img src="{% static 'images/img4.png' %}" alt="/">
 				</div>
+				{% if request.user.is_authenticated %}
 				<div class="col-lg-6" data-bottom-top="transform: translateY(100px)" data-top-bottom="transform: translateY(-10px)">
 					<div class="form-wrapper style-1 text-vr-wrapper">
 						<div class="text-vertical">نوبت بگیرید</div>
@@ -132,47 +120,36 @@
 							<div class="title-head">
 								<h2 class="form-title m-b0">رزرو یک <span>نوبت </span> <br>برای درمانی راحت</h2>
 							</div>
-							<form action="script/contact_smtp.php" class="dzForm" method="POST">
-								<input type="hidden" class="form-control" name="dzToDo" value="Appointment">
-								<input type="hidden" class="form-control" name="reCaptchaEnable" value="0">
+							<form class="dzForm" method="POST">
+								{% csrf_token %}
 								<div class="dzFormMsg"></div>
 								<div class="row">
 									<div class="col-sm-6 m-b30">
 										<div class="form-floating floating-underline input-light">
-											<input name="dzName" type="text" class="form-control" id="inputYourName" placeholder="نام">
-											<label for="inputYourName">نام</label>
+											{{ first_form.first_name }}
+											<label for="{ first_form.first_name.id_for_label }}">نام</label>
 										</div>
 									</div>
 									<div class="col-sm-6 m-b30">
 										<div class="form-floating floating-underline input-light">
-											<input name="dzEmail" type="email" class="form-control" id="inputYourEmail" placeholder="ایمیل">
-											<label for="inputYourEmail">ایمیل</label>
+											{{ first_form.last_name }}
+											<label for="{ first_form.last_name.id_for_label }}">نام خانوادگی</label>
 										</div>
 									</div>
 									<div class="col-sm-6 m-b30">
 										<div class="form-floating floating-underline input-light">
-											<input name="dzPhoneNumber" type="text" class="form-control dz-number" id="inputPhoneNumber" placeholder="شماره تماس">
-											<label for="inputPhoneNumber">شماره تماس</label>
+											{{ first_form.phone }}
+											<label for="{{ first_form.phone.id_for_label }}">شماره تماس</label>
 										</div>
 									</div>
 									<div class="col-sm-6 m-b30">
 										<div class="form-floating floating-underline input-light">
-											<select name="dzOther[Services]" class="bs-select" data-style="form-control" title="انتخاب خدمت">
-												<option value="آنژیوپلاستی">آنژیوپلاستی</option>
-												<option value="قلب شناسی">قلب شناسی</option>
-												<option value="دندانپزشکی">دندانپزشکی</option>
-												<option value="چشم پزشکی">چشم پزشکی</option>
-											</select>
-										</div>
-									</div>
-									<div class="col-sm-12 m-b30">
-										<div class="form-floating floating-underline input-light">
-											<textarea name="dzMessage" class="form-control" id="inputMessage" rows="6" placeholder="انتخاب خدمت"></textarea>
-											<label for="inputMessage">پیام</label>
+											{{ first_form.request }}
+											<label for="{{ first_form.request.id_for_label }}">متن</label>
 										</div>
 									</div>
 									<div class="col-sm-12">
-										<button type="submit" name="submit" value="submit" class="btn btn-lg btn-icon btn-white hover-secondary btn-shadow">
+										<button type="submit" name="submit_first_form" value="submit" class="btn btn-lg btn-icon btn-white hover-secondary btn-shadow">
 											نوبت‌دهی <span class="right-icon"><i class="feather icon-arrow-left"></i></span>
 										</button>
 									</div>
@@ -181,6 +158,27 @@
 						</div>
 					</div>
 				</div>
+				{% else %}
+				<div  class="col-lg-6" data-bottom-top="transform: translateY(100px)" data-top-bottom="transform: translateY(-10px)" align="center">
+					<div>
+						<p>
+							<h2>برای ثبت نوبت حتما باید <span>حساب</span> بسازید !!</h2>
+						</p>
+					</div>
+				</div>
+				<form class=style-1" method="post">
+					{% csrf_token %}
+					<div class="dzSubscribeMsg"></div>
+					<div class="form-group">
+						<div class="input-group mb-0">
+							{{ second_form.email }}
+							<div class="input-group-addon w-25">
+								<input name="submit_second_form" value="مشترک شوید" type="submit"  class="btn btn-primary btn-hover1 w-100"/>
+							</div>
+						</div>
+					</div>
+				</form>
+				{% endif %}
 			</div>
 		</div>
 	</section>
@@ -266,4 +264,6 @@
 		</div>
 	</section>
 {% include 'footer.html' %}
+<script src="{% static 'JavaScript/imagesloaded-2.js' %}"></script>
+
 {% endblock %}
