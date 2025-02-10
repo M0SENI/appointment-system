@@ -35,3 +35,6 @@ class UpdateAppointmentForm(forms.ModelForm):
             'status': forms.Select(attrs={'class': 'form-control', }),
             "note": forms.Textarea(attrs={'class': 'form-control',}),
         }
+
+class VerifyForm(forms.Form):
+    email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'form-control' , 'placeholder' :  'ایمیل' , 'required' : True , 'type' : 'email'}))
