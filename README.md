@@ -45,6 +45,8 @@ To set up the project locally, follow these steps:
    EMAIL_USE_TLS = True
    EMAIL_HOST_USER = 'your-email@example.com'
    EMAIL_HOST_PASSWORD = 'your-email-password'
+
+![image alt](https://github.com/M0SENI/appointment-system/blob/main/screen.jpg)
    
 ### Contribution
 
@@ -54,4 +56,4 @@ Contributions are welcome! Please feel free to submit a Pull Request or open an 
 
 This project is licensed under the MIT License. See the LICENSE file for details.
 
-![image alt](https://github.com/M0SENI/appointment-system/blob/main/screen.jpg)
+
