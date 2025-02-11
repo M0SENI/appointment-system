@@ -3,4 +3,4 @@ this is a basic hospital management system on a BootStrap style that contains a 
 
 not compeleted yet...
 
-https://github.com/M0SENI/appointment-system/blob/main/screen.jpg
+![image alt](https://github.com/M0SENI/appointment-system/blob/main/screen.jpg)
