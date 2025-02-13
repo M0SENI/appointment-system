@@ -28,3 +28,17 @@ class Appointments(Model):
         verbose_name_plural = "Appointments"
         verbose_name = "Appointment"
 
+
+class Contact(Model):
+    user = ForeignKey(User, on_delete=CASCADE , related_name='contact_user')
+    first_name = CharField(max_length=50)
+    last_name = CharField(max_length=50)
+    phone = CharField(max_length=50)
+    request = TextField(blank=True)
+    answer = TextField(blank=True)
+    created_date = DateField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["-created_date"]
+        verbose_name_plural = "Contacts"
+        verbose_name = "Contact"
