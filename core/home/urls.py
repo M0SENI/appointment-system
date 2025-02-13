@@ -11,7 +11,6 @@ urlpatterns = [
     path('contact-us/' , ContactUsView.as_view(), name="contact-us" ),
     path('about/' , AboutView.as_view(), name="about-us" ),
     path('faq/' , FaqView.as_view(), name="faq" ),
-    path('verify/', VerifyView.as_view(), name='verify'),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
