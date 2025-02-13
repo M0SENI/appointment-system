@@ -11,7 +11,7 @@ from django.core.mail import send_mail
 from django.urls import reverse_lazy
 from .forms import *
 from django.contrib.auth import get_user_model
-
+from .models import *
 User = get_user_model()
 
 
@@ -96,18 +96,22 @@ class AppointmentUpdateView(UpdateView):
         return response
 
 
-class VerifyView(FormView):
-    model = User
-    template_name = 'index.html'
-    form_class = VerifyForm
-    success_url = reverse_lazy('verify-code')
-
-
-
 
 
 class ContactUsView(CreateView):
     template_name = 'contact-us.html'
+    model = Contact
+    form_class = ContactForm
+    success_url = reverse_lazy('home')
+
+    def form_valid(self ,  form):
+        if not form.is_valid():
+            error(self.request ,"فرم شما ثبت نشد , لطفا مجددا امتحان کنید.")
+            return self.form_invalid(form)
+        form.instance.user = self.request.user
+        form.instance.save()
+        success(self.request , "فرم شما ثبت و ارسال شد!")
+        return super().form_valid(form)
 
 class AboutView(TemplateView):
     template_name = 'about-us.html'
