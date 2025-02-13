@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
-{% laod static %}
+{% load static %}
 {% block content %}
-{% include header %}
+{% include 'header.html'%}
 
 <main class="page-content">
-			<div class="dz-bnr-inr dz-banner-dark overlay-secondary-middle dz-bnr-inr-md" style="background-image:url(../static/images/bnr1.webp);">
+			<div class="dz-bnr-inr dz-banner-dark overlay-secondary-middle dz-bnr-inr-md h-50" style="background-image:url(../../static/images/bnr1.webp);">
 		<div class="container">
 			<div class="dz-bnr-inr-entry d-table-cell">
 				<h1 class="wow fadeInUp" data-wow-delay="0.2s" data-wow-duration="0.8s">ارتباط با ما</h1>
@@ -149,44 +149,37 @@
 					</div>
 					<div class="col-xl-5 m-b30" data-bottom-top="transform: translateY(50px)" data-top-bottom="transform: translateY(-50px)">
 						<div class="form-wrapper style-1">
-							<div class="form-body bg-primary background-blend-burn" style="background-image: url(../static/images/bg2.png); background-size: cover;">
+							<div class="form-body bg-primary background-blend-burn" style="background-image: url(../../static/images/bg2.png); background-size: cover;">
 								<div class="section-head style-1 m-b30">
 									<h2 class="title text-white m-b0"> در تماس باشید </h2>
 									<p class="text-white m-b0 fw-medium">در هر زمانی حاضر هستیم</p>
 								</div>
-								<form action="../assets/script/contact_smtp.php" class="dzForm" method="POST">
-									<input type="hidden" class="form-control" name="dzToDo" value="Contact">
-									<input type="hidden" class="form-control" name="reCaptchaEnable" value="0">
+								<form method="POST">
+									{% csrf_token %}
 									<div class="dzFormMsg"></div>
 									<div class="row">
 										<div class="col-sm-6 m-b30">
 											<div class="form-floating floating-underline input-light">
-												<input name="dzFirstName" type="text" class="form-control" id="inputFirstName" placeholder="نام">
-												<label for="inputFirstName">نام</label>
+												{{ form.first_name }}
+												<label for="inputYourFirstName">نام</label>
 											</div>
 										</div>
 										<div class="col-sm-6 m-b30">
 											<div class="form-floating floating-underline input-light">
-												<input name="dzLastName" type="text" class="form-control" id="inputLastName" placeholder="نام خانوادگی">
-												<label for="inputLastName">نام خانوادگی</label>
+												{{ form.last_name }}
+												<label for="inputYourLastName">نام خانوادگی</label>
 											</div>
 										</div>
 										<div class="col-sm-6 m-b30">
 											<div class="form-floating floating-underline input-light">
-												<input name="dzEmail" type="email" class="form-control" id="inputYourEmail" placeholder="ایمیل">
-												<label for="inputYourEmail">ایمیل</label>
-											</div>
-										</div>
-										<div class="col-sm-6 m-b30">
-											<div class="form-floating floating-underline input-light">
-												<input name="dzPhoneNumber" type="text" class="form-control dz-number" id="inputPhoneNumber" placeholder="شماره تماس">
-												<label for="inputPhoneNumber">شماره تماس</label>
+												{{ form.phone }}
+												<label for="inputYourPhoneNumber">شماره تماس</label>
 											</div>
 										</div>
 										<div class="col-sm-12 m-b30">
 											<div class="form-floating floating-underline input-light">
-												<textarea name="dzMessage" class="form-control" id="inputMessage" rows="6" placeholder="انتخاب خدمت"></textarea>
-												<label for="inputMessage">پیام</label>
+												{{ form.request }}
+												<label for="inputYourRequest">پیام</label>
 											</div>
 										</div>
 										<div class="col-sm-12">
@@ -203,5 +196,5 @@
 			</div>
 		</section>
 	</main>
-{% include footer %}
+{% include 'footer.html' %}
 {% endblock %}
