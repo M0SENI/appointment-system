@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+{% include "header.html" %}
+
+<body>
+<div class="container-xl">
+	<div class="table-responsive">
+		<div class="table-wrapper">
+			<div class="table-title">
+				<div class="row">
+					<div class="col-sm-6">
+						<h1 class="text-light">مدیریت <b>نوبت ها</b></h1>
+					</div>
+				</div>
+			</div>
+			<table class="table table-striped table-hover">
+				<thead>
+					<tr>
+						<th>
+							<span class="custom-checkbox">
+
+							</span>
+						</th>
+						<th>نام</th>
+						<th>ایمیل</th>
+						<th>یادداشت</th>
+						<th>شماره تماس</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+				{% for app in user_appointments %}
+					<tr>
+						<td>
+							<span class="custom-checkbox">
+							</span>
+						</td>
+						<td>{{ app.first_name }} {{ app.last_name }}</td>
+						<td>{{ app.user }}</td>
+						<td>{{ app.request }}</td>
+						<td>{{ app.phone }}</td>
+						<td>
+							<a href="{% url 'user-edit-appointments' app.pk %}" class="btn btn-success">بررسی</a>
+							<a href="{% url 'user-delete-appointments' app.pk %}" class="btn btn-danger text-light mt-2">حذف</a>
+						</td>
+					</tr>
+			{% endfor %}
+				</tbody>
+			</table>
+			<div class="pagination2">
+    			<span class="step-links2">
+        	{% if page_obj.has_previous %}
+            		<a href="{% url 'manage-appointments' %}?page={{ page_obj.previous_page_number }}" class="btn btn-success">قبلی</a>
+        	{% endif %}
+
+        		<span class="current">
+            		صفحه {{ page_obj.number }} از {{ page_obj.paginator.num_pages }}.
+        		</span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}" class="btn btn-success">بعدی</a>
+        {% endif %}
+    </span>
+</div>
+		</div>
+	</div>
+</div>
+</body>
+
+
+{% include 'footer.html' %}
+{% endblock %}
