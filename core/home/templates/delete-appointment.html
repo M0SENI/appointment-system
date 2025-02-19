@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+{% include 'header.html' %}
+<div class="w-50 h-25 border main container mt-3">
+<h3 class="text-center bg-danger text-light">آیا مطمئن هستید که می‌خواهید این قرار ملاقات را حذف کنید؟</h3>
+    <div class="text-center mt-2">
+        <h4>
+            شما با این کار نوبت خود را از لیست بررسی کارکنان حذف میکنید!
+        </h4>
+    </div>
+<form method="post" class="text-center mt-4">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">بله، حذف کن</button>
+    <a href="{% url 'manage-appointments' %}" class="btn btn-success">لغو</a>
+</form>
+</div>>
+{% endblock %}
+<style>
+.main{
+  margin: auto;
+  width: 50%;
+  border: 3px solid green;
+  padding: 10px;
+}
+</style>
