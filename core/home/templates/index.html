@@ -55,7 +55,6 @@
 									</div>
 								</div>
 							</div>
-
 						</div>
 					</div>
 				</div>
@@ -120,7 +119,7 @@
 							<div class="title-head">
 								<h2 class="form-title m-b0">رزرو یک <span>نوبت </span> <br>برای درمانی راحت</h2>
 							</div>
-							<form class="dzForm" method="POST">
+							<form method="POST">
 								{% csrf_token %}
 								<div class="dzFormMsg"></div>
 								<div class="row">
@@ -190,10 +189,10 @@
 				<div class="col-lg-6 m-b30 wow fadeInUp" data-wow-delay="0.2s" data-wow-duration="0.7s">
 					<div class="content-media">
 						<div class="" style="border-radius: 10px">
-							<img src="{% static 'images/img5.webp' %}" alt="">
+							<img src="{% static 'images/img5.webp' %}" class="rounded" alt="">
 						</div>
 						<div class="item1">
-							<div class="info-widget style-11 bg-primary text-center">
+							<div class="info-widget style-11 bg-primary text-center opacity-50">
 								<span class="content-text text-white"><span class="counter">20</span>+</span>
 								<h3 class="title m-b0 text-white">سال <br>  تجربه</h3>
 							</div>
