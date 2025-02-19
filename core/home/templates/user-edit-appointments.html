@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+{% include "header.html" %}
+<div class="col-lg-11 mt-4 mb-4" data-bottom-top="transform: translateY(100px)" data-top-bottom="transform: translateY(-10px)" style="">
+	<div class="form-wrapper style-1 text-vr-wrapper">
+		<div class="text-vertical">درخواست بیمار</div>
+		<div class="form-body bg-primary background-blend-burn" style="background-image: url(../../static/images/bg2.png); background-size: cover">
+			<div class="title-head">
+				<h2 class="form-title m-b0">درخواست بیمار را <span>بررسی </span> <br>کنید!</h2>
+			</div>
+			<form method="POST">
+				{% csrf_token %}
+				<div class="row">
+					<div class="col-sm-6 m-b30">
+						<div class="form-floating floating-underline input-light">
+							{{ form.first_name }}
+							<label for="{ form.name.id_for_label }}">نام</label>
+						</div>
+					</div>
+					<div class="col-sm-6 m-b30">
+						<div class="form-floating floating-underline input-light">
+							{{ form.last_name }}
+							<label for="{ form.last_name.id_for_label }}">نام خانوادگی</label>
+						</div>
+					</div>
+					<div class="col-sm-6 m-b30">
+						<div class="form-floating floating-underline input-light">
+							{{ form.phone }}
+							<label for="{{ form.phone.id_for_label }}">شماره تماس</label>
+						</div>
+					</div>
+					<div class="col-sm-6 m-b30">
+						<div class="form-floating floating-underline input-light">
+							{{ form.request }}
+							<label for="{{ form.request.id_for_label }}">متن</label>
+						</div>
+					</div>
+					<div class="col-sm-12">
+						<button type="submit" value="submit" class="btn btn-lg btn-icon btn-white hover-secondary btn-shadow mt-4">ثبت</button>
+						<a href="{% url 'manage-appointments' %}">
+							<button class="btn btn-lg btn-warning mt-4">برگشت</button>
+						</a>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+{% endblock %}>
