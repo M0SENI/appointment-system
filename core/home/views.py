@@ -2,13 +2,15 @@ from django.contrib.auth import get_user_model
 from django.shortcuts import render , redirect
 from django.views.generic.base import TemplateView
 from django.conf import settings
-from django.views.generic import ListView, CreateView, UpdateView, FormView , View
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import ListView, CreateView, UpdateView, FormView, View, DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin , UserPassesTestMixin
 from django.contrib.messages import *
 import random
 import string
 from django.core.mail import send_mail
 from django.urls import reverse_lazy
+from requests import delete
+
 from .forms import *
 from django.contrib.auth import get_user_model
 from .models import *
@@ -21,6 +23,8 @@ def generate_code():
 
 class HomeTemplateView(View):
     template_name = 'index.html'
+    context_object_name = 'user_appointments'
+    model = Appointments
 
     def post(self, request, *args, **kwargs):
         first_form = AppointmentForm(request.POST)
@@ -59,13 +63,18 @@ class HomeTemplateView(View):
         first_form = AppointmentForm()
         second_form = VerifyForm()
         return render(request, self.template_name, {'first_form': first_form, 'second_form': second_form})
-class ManageAppointmentTemplateView(ListView):
-    template_name = "manage-appointments.html"
+
+class AppointmentListView(UserPassesTestMixin, ListView):
     model = Appointments
-    queryset = Appointments.objects.filter(status='pending')
-    context_object_name = "appointments"
-    paginate_by = 8
-    # is staff permission needed
+    form_class = UpdateAppointmentForm
+    template_name = "appointment-list.html"
+    context_object_name = "appointment"
+    paginate_by = 7
+    ordering = "-sent_date"
+    def get_queryset(self):
+        return Appointments.objects.filter(status='pending')
+    def test_func(self):
+        return self.request.user.is_staff
 
 class AppointmentAddView(LoginRequiredMixin,FormView):
     model = Appointments
@@ -84,17 +93,14 @@ class AppointmentAddView(LoginRequiredMixin,FormView):
 
 
 
-class AppointmentUpdateView(UpdateView):
+class AppointmentUpdateView(UserPassesTestMixin , UpdateView):
     model = Appointments
     form_class = UpdateAppointmentForm
-    template_name = 'update-appointment.html'
+    template_name = 'appointment-update.html'
     template_name_suffix = "_update_form"
-    success_url = "/manage-appointments/"
-    def form_valid(self , form):
-        response = super().form_valid(form)
-        success(self.request , "Appointment updated successfully!")
-        return response
-
+    success_url = reverse_lazy('appointments-list')
+    def test_func(self):
+        return self.request.user.is_staff
 
 
 
@@ -113,8 +119,56 @@ class ContactUsView(CreateView):
         success(self.request , "فرم شما ثبت و ارسال شد!")
         return super().form_valid(form)
 
+
+class ManageAppointments(LoginRequiredMixin,ListView):
+    template_name = 'manage-appointments.html'
+    model = Appointments
+    paginate_by = 4
+    context_object_name = "user_appointments"
+    def get_queryset(self):
+        return Appointments.objects.filter(user=self.request.user , status='pending')
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['checked'] = Appointments.objects.filter(user=self.request.user).exclude(status='pending')
+        return context
+
+
+class DeleteAppointmentView(DeleteView):
+    model = Appointments
+    success_url = reverse_lazy('manage-appointments')
+    template_name = 'delete-appointment.html'
+
+class EditAppointmentsView(UpdateView):
+    model = Appointments
+    form_class = AppointmentForm
+    template_name = 'user-edit-appointments.html'
+    success_url = reverse_lazy('manage-appointments')
+    template_name_suffix = "_update_form"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 class AboutView(TemplateView):
     template_name = 'about-us.html'
 
 class FaqView(TemplateView):
     template_name = 'faqs.html'
+
+
+
+
