@@ -96,6 +96,9 @@
 							<a href="{% url 'home' %}"><img src="{% static 'images/logo.svg' %}" alt=""></a>
 						</div>
 						<ul class="nav navbar-nav">
+							{% if request.user.is_staff %}
+							<li><a href="{% url 'appointments-list' %}">بررسی نوبت ها</a></li>
+							{% endif %}
 							<li class="has-mega-menu sub-menu-down auto-width menu-left"></li>
 							<li class="sub-menu-down">
 								<a href="javascript:void(0);"><span>صفحات</span> <i class="fas fa-chevron-down tabindex"></i></a>
@@ -110,6 +113,7 @@
 								</ul>
 							</li>
 							<li><a href="{% url 'contact-us' %}"><span>ارتباط با ما</span></a></li>
+
 						</ul>
 
 						<div class="dz-social-icon">
@@ -179,28 +183,19 @@
 					</div>
 					<p>کلینیک مستر یک الگوی بوت سترپ اچ تی ام ال مدرن و پاسخگو است که برای وب سایت های بهداشتی و پزشکی طراحی شده است.ایده آل برای کلینیک ها ، بیمارستان ها و متخصصان مراقبت های بهداشتی که به دنبال حضور حرفه ای آنلاین با طراحی زیبا و کاربر پسند هستند.</p>
 				</div>
-
-				<div class="widget">
-					<div class="widget-title">
-						<h4 class="title">ارتباط با ما</h4>
-					</div>
-					<ul class="list-check">
-						<li>خیابان 785 15 ، دفتر 478 برلین ، د 81566</li>
-						<li><a href="mailto:email@domain.com" class="text-body">email@domain.com</a></li>
-						<li><a href="tel:+11234567890" class="text-body">+1 123 456 7890</a></li>
-					</ul>
+				{% if request.user.is_authenticated %}
+				<div>
+					<h3><a href="{% url 'manage-appointments' %}">
+						مدیریت نوبت های شما
+					</a></h3>
 				</div>
-
+				<hr>
 				<div class="widget">
 					<div class="widget-title">
-						<h4 class="title">اطلاعات حساب</h4>
-						{% if request.user.is_authenticated %}
-						<h5> {{ requests.user.email }} </h5>
-						<h5> {{ requests.user.first_name }} {{ request.user.last_name }} </h5>
-						<h5> {{ requests.user.phone }}</h5>
-						<h5><a href="{% url 'logout' %}">-خروج از حساب</a></h5>
-						{% else %}
-						<h5><a href="{% url 'verify' %}">-تایید یا ساخت حساب</a></h5>
+
+						<h4 class="title ">اطلاعات حساب :</h4>
+						<h5 class="mt-4"> {{ request.user.email }} </h5>
+						<h5><a href="{% url 'logout' %}" class="btn btn-danger text-light">خروج از حساب</a></h5>
 						{% endif %}
 					</div>
 				</div>
