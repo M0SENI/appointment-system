@@ -28,12 +28,12 @@ class UpdateAppointmentForm(forms.ModelForm):
         model = Appointments
         fields = ["first_name" , "last_name" ,'phone' ,'request',"status" , "note"]
         widgets = {
-            'first_name': forms.TextInput(attrs={'class': 'form-control', "readonly": "readonly" }),
-            'last_name': forms.TextInput(attrs={'class': 'form-control', "readonly": "readonly" }),
-            'phone': forms.TextInput(attrs={'class': 'form-control', "readonly": "readonly" }),
-            'request': forms.Textarea(attrs={'class': 'form-control', "readonly": "readonly" }),
-            'status': forms.Select(attrs={'class': 'form-control', }),
-            "note": forms.Textarea(attrs={'class': 'form-control',}),
+            'first_name': forms.TextInput(attrs={'class': 'form-control', "readonly": "readonly", 'id' : 'InputYourFirstName' }),
+            'last_name': forms.TextInput(attrs={'class': 'form-control', "readonly": "readonly" , 'id' : 'InputYourLastName'}),
+            'phone': forms.TextInput(attrs={'class': 'form-control', "readonly": "readonly" , 'id' : 'InputYourPhone'}),
+            'request': forms.Textarea(attrs={'class': 'form-control', "readonly": "readonly" , 'id' : 'InputYourRequest'}),
+            'status': forms.Select(attrs={'class': 'form-control text-secondary', 'id' : 'InputYourStatus'}),
+            'note': forms.Textarea(attrs={'class': 'form-control h-25', 'id' : 'InputYourNote'}),
         }
 
 class VerifyForm(forms.Form):
