@@ -9,8 +9,6 @@ import random
 import string
 from django.core.mail import send_mail
 from django.urls import reverse_lazy
-from requests import delete
-
 from .forms import *
 from django.contrib.auth import get_user_model
 from .models import *
@@ -63,6 +61,8 @@ class HomeTemplateView(View):
         first_form = AppointmentForm()
         second_form = VerifyForm()
         return render(request, self.template_name, {'first_form': first_form, 'second_form': second_form})
+    def get_queryset(self):
+        return Appointments.objects.filter(user=self.request.user).exclude(status='pending')
 
 class AppointmentListView(UserPassesTestMixin, ListView):
     model = Appointments
@@ -127,10 +127,6 @@ class ManageAppointments(LoginRequiredMixin,ListView):
     context_object_name = "user_appointments"
     def get_queryset(self):
         return Appointments.objects.filter(user=self.request.user , status='pending')
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['checked'] = Appointments.objects.filter(user=self.request.user).exclude(status='pending')
-        return context
 
 
 class DeleteAppointmentView(DeleteView):
@@ -144,6 +140,17 @@ class EditAppointmentsView(UpdateView):
     template_name = 'user-edit-appointments.html'
     success_url = reverse_lazy('manage-appointments')
     template_name_suffix = "_update_form"
+
+class ReminderView(LoginRequiredMixin,ListView):
+    model = Appointments
+    template_name = 'reminder.html'
+    context_object_name = "checked_appointments"
+    def get_queryset(self):
+        return Appointments.objects.filter(user=self.request.user).exclude(status='pending')
+
+
+
+
 
 
 
