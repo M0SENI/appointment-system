@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block content %}
+{% include 'header.html' %}
+<div class="col-12 checked_main">
+    <ul>
+        {% for checked in checked_appointments %}
+        <li class="appointment-card {% if checked.status == 'accepted' %}accepted{% endif %}" >
+            <h3>
+                {% if checked.status == 'accepted' %}
+                    نوبت شما قبول شده!
+                    <h5>اطلاعات بیشتر از طریق ایمیل ارسال شد!</h5>
+                {% else %}
+                    نوبت شما رد شده!
+                {% endif %}
+                </h3>
+                    <h4 class="mt-3">توضیحات اضافه برای شما:</h4>
+                    <p>{{ checked.note }}</p>
+        </li>
+            <br>
+        {% endfor %}
+    </ul>
+</div>
+
+<style>
+.checked_main {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.appointment-card {
+    width: 300px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #ffcccb;
+    border-left: 5px solid #ff0000;
+
+}
+
+.accepted {
+    background-color: #d4edda; !important;
+    border-left: 5px solid #28a745; !important;
+}
+
+.appointment-card>h3 {
+    margin-top: 0;
+}
+
+.appointment-card>p {
+    margin: 5px 0;
+}
+.appointment-card>{
+    list-style-type: none;
+}
+
+</style>
+{% endblock %}
