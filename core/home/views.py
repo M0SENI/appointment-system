@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from django.http import Http404
 from django.shortcuts import render , redirect
 from django.views.generic.base import TemplateView
 from django.conf import settings
@@ -92,7 +93,6 @@ class AppointmentAddView(LoginRequiredMixin,FormView):
         return super().form_valid(form)
 
 
-
 class AppointmentUpdateView(UserPassesTestMixin , UpdateView):
     model = Appointments
     form_class = UpdateAppointmentForm
@@ -101,7 +101,6 @@ class AppointmentUpdateView(UserPassesTestMixin , UpdateView):
     success_url = reverse_lazy('appointments-list')
     def test_func(self):
         return self.request.user.is_staff
-
 
 
 class ContactUsView(CreateView):
@@ -148,33 +147,15 @@ class ReminderView(LoginRequiredMixin,ListView):
     def get_queryset(self):
         return Appointments.objects.filter(user=self.request.user).exclude(status='pending')
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 class AboutView(TemplateView):
     template_name = 'about-us.html'
 
 class FaqView(TemplateView):
     template_name = 'faqs.html'
+
+def custom_404(request, exception):
+    return render(request, '404.html', status=404)
+
 
 
 
