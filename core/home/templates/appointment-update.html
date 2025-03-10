@@ -32,6 +32,12 @@
 					</div>
 					<div class="col-sm-6 m-b30">
 						<div class="form-floating floating-underline input-light">
+							{{ form.category }}
+							<label for="{{ form.category.id_for_label }}">تخصص</label>
+						</div>
+					</div>
+					<div class="col-sm-6 m-b30">
+						<div class="form-floating floating-underline input-light">
 							{{ form.request }}
 							<label for="{{ form.request.id_for_label }}">متن</label>
 						</div>
@@ -46,13 +52,19 @@
 					<div class="col-sm-6 m-t30 ">
 						<div class="form-floating floating-underline input-light h-25">
 							{{ form.status }}
-							<label for="{{ form.status.id_for_label }}">متن</label>
+							<label for="{{ form.status.id_for_label }}">وضغیت</label>
 						</div>
 					</div>
 					<div class="col-sm-6 m-t30 h-25">
 						<div class="form-floating floating-underline input-light">
 							{{ form.note }}
 							<label for="{{ form.note.id_for_label }}">یادداشت شما</label>
+						</div>
+					</div>
+					<div class="col-sm-6 m-t30 h-25">
+						<div class="form-floating floating-underline input-light">
+							{{ form.meet_date }}
+							<label for="{{ form.meet_date.id_for_label }}">زمان ملاقات</label>
 						</div>
 					</div>
 					<div class="col-sm-12">
