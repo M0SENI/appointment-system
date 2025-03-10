@@ -143,6 +143,7 @@ class EditAppointmentsView(UpdateView):
 class ReminderView(LoginRequiredMixin,ListView):
     model = Appointments
     template_name = 'reminder.html'
+    paginate_by = 2
     context_object_name = "checked_appointments"
     def get_queryset(self):
         return Appointments.objects.filter(user=self.request.user).exclude(status='pending')
