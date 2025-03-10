@@ -4,7 +4,7 @@ from .models import *
 # Register your models here.
 class AppointmentAdmin(admin.ModelAdmin):
     model = Appointments
-    list_display = ("user" , "last_name" , "status" ,"phone")
+    list_display = ("user" , "last_name" , "status" ,"phone" , "category")
     list_filter = ('status' , )
 
 
