@@ -12,15 +12,25 @@ class Appointments(Model):
         ('accepted', 'تایید شده'),
         ('rejected', 'لغو  شده'),
     ]
+
+    CAT_CHOICES=[
+        ("heart" , "قلب و عروق"),
+        ("brain" ,"اعصاب و روان"),
+        ("surgery","جراح")
+
+
+    ]
     user = ForeignKey(User, on_delete=CASCADE , related_name='appointments_user')
     first_name = CharField(max_length=50)
     last_name = CharField(max_length=50)
     phone = CharField(max_length=50)
     request = TextField(blank=True)
+    category = CharField(max_length=50,blank=True , choices=CAT_CHOICES)
     status = CharField(max_length=50,blank=True , choices=STATUS_CHOICES, default='pending')
     note = TextField(blank=True)
     sent_date = DateField(auto_now_add=True)
     checked_date = DateField(auto_now=True)
+    meet_date = CharField(max_length=50 , null=True , blank=True)
 
 
     class Meta:
