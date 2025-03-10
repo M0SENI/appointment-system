@@ -1,25 +1,48 @@
 {% extends 'base.html' %}
 {% block content %}
 {% include 'header.html' %}
-<div class="col-12 checked_main">
-    <ul>
+<div class="col-12 checked_main ">
+    <ul class='d-flex flex-row'>
         {% for checked in checked_appointments %}
-        <li class="appointment-card {% if checked.status == 'accepted' %}accepted{% endif %}" >
+        <li class="appointment-card {% if checked.status == 'accepted' %}accepted{% endif %} ml-2" >
             <h3>
                 {% if checked.status == 'accepted' %}
                     نوبت شما قبول شده!
-                    <h5>اطلاعات بیشتر از طریق ایمیل ارسال شد!</h5>
                 {% else %}
                     نوبت شما رد شده!
                 {% endif %}
+                {% if checked.meet_date %}
+                <h5>زمان ملاقات:</h5>
+                <h3>{{ checked.meet_date }}</h3>
+                {% endif %}
                 </h3>
                     <h4 class="mt-3">توضیحات اضافه برای شما:</h4>
-                    <p>{{ checked.note }}</p>
+                    <b><p>{{ checked.note }}</p></b>
+
+                تاریخ:<p>{{ checked.sent_date }}</p>    
         </li>
             <br>
         {% endfor %}
     </ul>
+
+<div class="pagination2 mt-0">
+    			<span class="step-links2">
+        	{% if page_obj.has_previous %}
+            		<a href="?page={{ page_obj.previous_page_number }}" class="btn btn-success">قبلی</a>
+        	{% endif %}
+
+        		<span class="current">
+            		صفحه {{ page_obj.number }} از {{ page_obj.paginator.num_pages }}.
+        		</span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}" class="btn btn-success">بعدی</a>
+        {% endif %}
+    </span>
 </div>
+</div>
+
+
 
 <style>
 .checked_main {
