@@ -23,6 +23,7 @@ def generate_code():
 class HomeTemplateView(View):
     template_name = 'index.html'
     context_object_name = 'user_appointments'
+    success_url = reverse_lazy('success')
     model = Appointments
 
     def post(self, request, *args, **kwargs):
@@ -34,7 +35,7 @@ class HomeTemplateView(View):
                 first_form.instance.user = self.request.user
                 first_form.instance.save()
                 success(self.request, "فرم شما ثبت و ارسال شد!")
-                return redirect('home')
+                return redirect('success')
             else:
                 error(self.request, "فرم شما ثبت نشد، لطفا مجددا امتحان کنید.")
 
@@ -81,7 +82,7 @@ class AppointmentAddView(LoginRequiredMixin,FormView):
     model = Appointments
     form_class = AppointmentForm
     template_name = 'appointment.html'
-    success_url = '/make-an-appointment/'
+    success_url = reverse_lazy('success')
 
     def form_valid(self ,  form):
         if not form.is_valid():
@@ -98,7 +99,7 @@ class AppointmentUpdateView(UserPassesTestMixin , UpdateView):
     form_class = UpdateAppointmentForm
     template_name = 'appointment-update.html'
     template_name_suffix = "_update_form"
-    success_url = reverse_lazy('appointments-list')
+    success_url = reverse_lazy('success')
     def test_func(self):
         return self.request.user.is_staff
 
@@ -107,7 +108,7 @@ class ContactUsView(CreateView):
     template_name = 'contact-us.html'
     model = Contact
     form_class = ContactForm
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy('success')
 
     def form_valid(self ,  form):
         if not form.is_valid():
@@ -130,14 +131,14 @@ class ManageAppointments(LoginRequiredMixin,ListView):
 
 class DeleteAppointmentView(DeleteView):
     model = Appointments
-    success_url = reverse_lazy('manage-appointments')
+    success_url = reverse_lazy('success')
     template_name = 'delete-appointment.html'
 
 class EditAppointmentsView(UpdateView):
     model = Appointments
     form_class = AppointmentForm
     template_name = 'user-edit-appointments.html'
-    success_url = reverse_lazy('manage-appointments')
+    success_url = reverse_lazy('success')
     template_name_suffix = "_update_form"
 
 class ReminderView(LoginRequiredMixin,ListView):
@@ -147,6 +148,9 @@ class ReminderView(LoginRequiredMixin,ListView):
     context_object_name = "checked_appointments"
     def get_queryset(self):
         return Appointments.objects.filter(user=self.request.user).exclude(status='pending')
+    
+class SuccessView(TemplateView):
+    template_name = "success.html"
 
 class AboutView(TemplateView):
     template_name = 'about-us.html'

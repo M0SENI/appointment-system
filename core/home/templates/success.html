@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% block content %}
+{% include 'header.html' %}
+{% if request.user.is_staff or request.user.is_superuser %}
+<div class="checked_main ">
+    <ul class=''>
+        <li class="appointment-card" >
+            <h4>ویرایش فرم موفق بود!</h4>
+            <br>
+            <div>
+                <h3><a href="{% url 'home' %}" class="text-dark">خانه</a></h3>
+                <h3><a href="{% url 'appointments-list' %}" class="text-dark">مدیریت نوبت ها</a></h3>
+            </div>
+        </li>
+    </ul>
+</div>
+{% else %}
+<div class="checked_main ">
+    <ul class=''>
+        <li class="appointment-card">
+            <h4>ثبت فرم موفق بود!</h4>
+            <p>فرم شما ثبت شد و بزودی بررسی خواهد شد!
+                برای اطلاع از وضعیت نوبت های بررسی شده بخش مدیریت نوبت های خود را بررسی کنید
+            </p>
+            <div>
+                <h3><a href="{% url 'home' %}">خانه</a></h3>
+                <h3><a href="{% url 'manage-appointments' %}">مدیریت نوبت ها</a></h3>
+            </div>
+        </li>
+
+    </ul>
+</div>
+{% endif %}
+
+
+
+<style>
+.checked_main {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.appointment-card {
+    width: 300px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #d4edda; !important;
+    border-left: 5px solid #28a745; !important;
+
+}
+
+.appointment-card>h3 {
+    margin-top: 0;
+}
+
+.appointment-card>p {
+    margin: 5px 0;
+}
+.appointment-card>{
+    list-style-type: none;
+}
+
+</style>
+{% endblock %}

@@ -17,7 +17,7 @@
 							<div class="title-head">
 								<h2 class="form-title m-b0">رزرو یک <span>نوبت </span> <br>برای درمانی راحت</h2>
 							</div>
-							<form class="dzForm" method="POST">
+							<form method="POST">
 								{% csrf_token %}
 								<div class="dzFormMsg"></div>
 								<div class="row">
@@ -41,15 +41,19 @@
 									</div>
 									<div class="col-sm-6 m-b30">
 										<div class="form-floating floating-underline input-light">
+											{{ form.category }}
+											<label for="{{ form.category.id_for_label }}">تخصص</label>
+										</div>
+									</div>
+									<div class="col-sm-6 m-b30">
+										<div class="form-floating floating-underline input-light">
 											{{ form.request }}
 											<label for="{{ form.request.id_for_label }}">متن</label>
 										</div>
 									</div>
 									<div class="col-sm-12">
-										<button type="submit" name="submit" value="submit" class="btn btn-lg btn-icon btn-white hover-secondary btn-shadow">
-											نوبت‌دهی <span class="right-icon hover-secondary text-light"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
-  <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/>
-</svg></span>
+										<button type="submit" name="submit_form" value="submit" class="btn btn-lg btn-icon btn-white hover-secondary btn-shadow">
+											نوبت‌دهی
 										</button>
 									</div>
 								</div>
