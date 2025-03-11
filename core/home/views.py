@@ -38,7 +38,7 @@ class HomeTemplateView(View):
                 return redirect('success')
             else:
                 error(self.request, "فرم شما ثبت نشد، لطفا مجددا امتحان کنید.")
-
+ 
         if 'submit_second_form' in request.POST:
             if second_form.is_valid():
                 email = second_form.cleaned_data['email']
