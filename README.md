@@ -1,4 +1,4 @@
-NOT COMPELETED YET!!!!
+## Compeleted v1.0
 ## Appointment Management System
 
 This repository contains a comprehensive appointment management system built with Django. The system includes the following features:
