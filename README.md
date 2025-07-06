@@ -22,7 +22,7 @@ To set up the project locally, follow these steps:
 
 1. Clone the repository:
   
-   [git clone https://github.com/your-username/appointment-management-system.git](https://github.com/M0SENI/appointment-system.git)
+   [git clone https://github.com/M0SENI/appointment-management-system.git](https://github.com/M0SENI/appointment-system.git)
    cd appointment-system
    
 2. Create a virtual environment and install dependencies:
